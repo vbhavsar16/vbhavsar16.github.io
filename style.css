@@ -3,7 +3,7 @@
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 20px;
     background-image: url('Images/ferrari.jpg'); /* Replace 'background-image.jpg' with the path to your image */
     background-size: cover;
     background-position: center;
@@ -26,6 +26,8 @@ header {
 
 nav {
     background-color: #555;
+    color: #fff;
+    text-align: center;
     padding: 10px;
 }
 

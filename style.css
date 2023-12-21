@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     background-image: url('Images/ferrari.jpg'); /* Replace 'background-image.jpg' with the path to your image */
-    background-size: 100px 40px;
+    background-size: 700px 400px;
     background-position: center bottom;
     background-repeat: no-repeat;
     color: #fff; /* Set text color to contrast with the background */

@@ -1,17 +1,11 @@
 /* style.css */
 
-html, body {
-    height: 100%;
-    margin: 0;
-    /* Other styles */
-}
-
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     background-image: url('Images/ferrari.jpg'); /* Replace 'background-image.jpg' with the path to your image */
-    background-size: auto;
+    background-size: 100px 40px;
     background-position: center bottom;
     background-repeat: no-repeat;
     color: #fff; /* Set text color to contrast with the background */

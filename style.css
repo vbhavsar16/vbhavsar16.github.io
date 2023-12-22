@@ -25,6 +25,7 @@ nav {
 nav ul {
     list-style-type: none;
     text-align: center;
+    color: #fff;
     margin: 0;
     padding: 0;
 }
@@ -34,9 +35,9 @@ nav li {
     margin-right: 20px;
 }
 
-main {
+/* main {
     padding: 20px;
-}
+} */
 
 footer {
     background-color: #333;

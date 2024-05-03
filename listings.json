@@ -2,6 +2,7 @@
   {
     "listing": "/notes.html",
     "items": [
+      "/posts/recom_engine/index.html",
       "/posts/pinn_intro/index.html",
       "/posts/welcome/index.html"
     ]

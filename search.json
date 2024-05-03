@@ -11,14 +11,14 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About me …"
+    "text": "🌍  I’m based in New York, NY\n✉️  You can contact me at imvivek1695@gmail.com\n🧠  I’m learning DeepXDE, NVIDIA Modulus and TAO Toolkit\n🤝  I’m open to collaborating on Earth Science Systems and Climate"
   },
   {
     "objectID": "notes.html",
     "href": "notes.html",
     "title": "Notes",
     "section": "",
-    "text": "PINN: Introduction\n\n\n\n\n\n\nScientific ML\n\n\n1D Heat Eq.\n\n\nPyTorch\n\n\n\n\n\n\n\n\n\nApr 17, 2024\n\n\nVivek Bhavsar\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nApr 14, 2024\n\n\nVivek Bhavsar\n\n\n\n\n\n\nNo matching items"
+    "text": "Recommendation Engine: Introduction\n\n\n\n\n\n\nContent Filtering\n\n\nCollaborative Filtering\n\n\n\n\n\n\n\n\n\nApr 28, 2024\n\n\nVivek Bhavsar\n\n\n\n\n\n\n\n\n\n\n\n\nPINN: Introduction\n\n\n\n\n\n\nScientific ML\n\n\n1D Heat Eq.\n\n\nPyTorch\n\n\n\n\n\n\n\n\n\nApr 17, 2024\n\n\nVivek Bhavsar\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nApr 14, 2024\n\n\nVivek Bhavsar\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/pinn_intro/index.html",
@@ -37,7 +37,7 @@
   {
     "objectID": "CV.html",
     "href": "CV.html",
-    "title": "quarto-cli-7918",
+    "title": "Vivek-CV",
     "section": "",
     "text": "It appears you don't have a PDF plugin for this browser.\n    No biggie... you can click here to\n    download the PDF file."
   },
@@ -47,5 +47,26 @@
     "title": "Scientific Machine Learning | Earth Scientist | CFD",
     "section": "",
     "text": "Summary\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\n\n\nExperience\n\n\n\nEducation"
+  },
+  {
+    "objectID": "posts/recom_engine/index.html",
+    "href": "posts/recom_engine/index.html",
+    "title": "Recommendation Engine: Introduction",
+    "section": "",
+    "text": "The recommendation engine uses the data of the users and product items. First, we will look at the simplest data which does not have any features associated with either users or items.\n\nThe cells can be populated with the various information collected, for example, binary (buy/no buy, play/not played, watched/not watched, bookmarked/not bookmarked) or discrete (ratings, total watch time, percentage of video watched).\n\n\nThere are two types of recommendation engines. 1. Collaborative based filtering 2. Content based filtering\n\n\nThe collaborative filtering is also called matrix completion. The simplest example for this type of algorithm is Similarity based algorithm.\nLet’s see an example of this algorithm\n#\nFor other types of algorithm, we need to first look at Matrix Factorization"
+  },
+  {
+    "objectID": "posts/recom_engine/index.html#types-of-engine",
+    "href": "posts/recom_engine/index.html#types-of-engine",
+    "title": "Recommendation Engine: Introduction",
+    "section": "",
+    "text": "There are two types of recommendation engines. 1. Collaborative based filtering 2. Content based filtering\n\n\nThe collaborative filtering is also called matrix completion. The simplest example for this type of algorithm is Similarity based algorithm.\nLet’s see an example of this algorithm\n#\nFor other types of algorithm, we need to first look at Matrix Factorization"
+  },
+  {
+    "objectID": "about.html#scientific-machine-learning-geophysicist-computational-data-scientist",
+    "href": "about.html#scientific-machine-learning-geophysicist-computational-data-scientist",
+    "title": "About",
+    "section": "",
+    "text": "🌍  I’m based in New York, NY\n✉️  You can contact me at imvivek1695@gmail.com\n🧠  I’m learning DeepXDE, NVIDIA Modulus and TAO Toolkit\n🤝  I’m open to collaborating on Earth Science Systems and Climate"
   }
 ]

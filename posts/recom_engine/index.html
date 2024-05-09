@@ -107,6 +107,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -212,23 +241,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="the-basic-algorithms" class="level1">
-<h1>The basic algorithms</h1>
-<p>The recommendation engine uses the data of the users and product items. First, we will look at the simplest data which does not have any features associated with either users or items.</p>
-<p><img src="matrix.jpg" class="img-fluid"></p>
-<p>The cells can be populated with the various information collected, for example, binary (buy/no buy, play/not played, watched/not watched, bookmarked/not bookmarked) or discrete (ratings, total watch time, percentage of video watched).</p>
-<section id="types-of-engine" class="level2">
-<h2 class="anchored" data-anchor-id="types-of-engine">Types of Engine</h2>
+<p>The recommendation engine are widely used to suggest content/itmes to user in persionalized manner. In Qwarke, users will choose the top 3 subject of interest. Data associated with the video including the title, authors, keywords, and key points are saved in the database. There are mainly two types of recommendation engine.</p>
+<section id="types-of-engine" class="level1">
+<h1>Types of Engine</h1>
 <p>There are two types of recommendation engines. 1. Collaborative based filtering 2. Content based filtering</p>
-<section id="collaborative-based-filtering" class="level3">
-<h3 class="anchored" data-anchor-id="collaborative-based-filtering">Collaborative based Filtering</h3>
+<section id="collaborative-based-filtering" class="level2">
+<h2 class="anchored" data-anchor-id="collaborative-based-filtering">Collaborative based Filtering</h2>
 <p>The collaborative filtering is also called matrix completion. The simplest example for this type of algorithm is Similarity based algorithm.</p>
-<p>Let’s see an example of this algorithm</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>For other types of algorithm, we need to first look at Matrix Factorization</p>
+<section id="the-correlation-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="the-correlation-algorithm">The Correlation Algorithm</h3>
+<p>First, we will look at the simplest data which does not have any features associated with either users or items.</p>
+<p>Let’s see an example of creating the correlation matrix</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Correlation_matrix <span class="op">=</span> df.corr(method<span class="op">=</span><span class="st">'pearson'</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Correlation_matrix[<span class="st">'video_id'</span>].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">1</span>:<span class="dv">11</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will give you the correlation matrix of the items or users giving a correlation values in the cells. The top 10 correlated content with the given content will be provided. If user <code>X</code> have watched item <code>Y</code>, then top correlated content with item <code>Y</code> can be recommended to the user.</p>
 </section>
-<section id="content-based-filtering" class="level3">
-<h3 class="anchored" data-anchor-id="content-based-filtering">Content based Filtering</h3>
+<section id="the-matrix-factorization" class="level3">
+<h3 class="anchored" data-anchor-id="the-matrix-factorization">The Matrix Factorization</h3>
+<p>In this method, the simplest matrix of <code>users x videos</code> will factorized using <code>SVD</code> (Singular Value Decomposition) method. To find matrix <code>B</code> of shape <code>users x features</code> and matrix <code>C</code> of shape <code>videos x features</code>,</p>
+<p><span class="math display">\[
+argmin\ \Sigma (A_{ij} - B_{i}C^{T}_{j})^{2}
+\]</span></p>
+<p>The updated <code>A</code> matrix which will have empty values filled by,</p>
+<p><span class="math display">\[
+\hat{A} = B \cdot C^{T}
+\]</span></p>
+</section>
+</section>
+<section id="content-based-filtering" class="level2">
+<h2 class="anchored" data-anchor-id="content-based-filtering">Content based Filtering</h2>
+<p>The data is dynamic and user’s interest will change overtime. That is why the content based algorithm should be implemented for all user except for the new users. Data such as watch counts is collected over time as they watch more videos.</p>
+<section id="the-similarity-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="the-similarity-matrix">The Similarity Matrix</h3>
+<p>For other types of algorithm, we need to first look at Matrix Factorization</p>
+<p><img src="matrix.jpg" class="img-fluid"></p>
+<p>The cells in the above matrix can be populated with the various information collected, for example, binary (buy/no buy, played/not played, watched/not watched, bookmarked/not bookmarked) or discrete (ratings, total watch time, percentage of video watched).</p>
+<p>The string type data (For example in Qwarke, title, keywords, key take away, and category of interest) can be converted in vector using <code>CountVectorizer()</code>. All the text feature can be combined in to one feature. Matrix of token count will be created where each combined feature will have all unique words counted in the columns.</p>
+<p>Let’s see an example of creating a similarity matrix</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cv <span class="op">=</span> CountVectorize()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>count_matrix <span class="op">=</span> cv.fit_transform(data[<span class="st">"combined_features"</span>])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>cosine_similarity_score <span class="op">=</span> cosine_similarity(count_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, the score calculated in the similarity matrix here is calculated on a feature.</p>
+</section>
+<section id="recommendor-using-pyspark" class="level3">
+<h3 class="anchored" data-anchor-id="recommendor-using-pyspark">Recommendor Using PySpark</h3>
+<p>The data available can be as simple as users, items, and watch count. Let’s see an example of reccomending items based on this data using PySpark. The datafrmae has columns <code>user_id</code>, <code>video</code>, and <code>watch_count</code>. Using a <code>StringIndexer</code>, convert the string columns <code>user_id</code> and <code>video</code> to unique ids called <code>user_id_index</code> and <code>video_index</code></p>
+<p>For this we are using an Alternating Least Squares (ALS) method to fit the data.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(training, test) <span class="op">=</span> data.randomSplit([<span class="fl">0.5</span>, <span class="fl">0.5</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>USERID <span class="op">=</span> <span class="st">'user_id_index'</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>TRACK <span class="op">=</span> <span class="st">'video_index'</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>COUNT <span class="op">=</span> <span class="st">'watch_count'</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>als <span class="op">=</span> ALS(maxIter<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>          regParam<span class="op">=</span><span class="fl">0.01</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>          userCol<span class="op">=</span>USERID,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>          itemCol<span class="op">=</span>TRACK,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>          ratingCol<span class="op">=</span>COUNT)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> als.fit(training)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.transform(test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now generate the top 10 recommendation for each users.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>recs <span class="op">=</span> model.recommendForAllUsers(<span class="dv">10</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>recs.take(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will show the 10 recommended videos for <code>user1</code>.</p>
+</section>
+<section id="stacked-features" class="level3">
+<h3 class="anchored" data-anchor-id="stacked-features">Stacked Features</h3>
 
 
 </section>

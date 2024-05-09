@@ -53,7 +53,7 @@
     "href": "posts/recom_engine/index.html",
     "title": "Recommendation Engine: Introduction",
     "section": "",
-    "text": "The recommendation engine uses the data of the users and product items. First, we will look at the simplest data which does not have any features associated with either users or items.\n\nThe cells can be populated with the various information collected, for example, binary (buy/no buy, play/not played, watched/not watched, bookmarked/not bookmarked) or discrete (ratings, total watch time, percentage of video watched).\n\n\nThere are two types of recommendation engines. 1. Collaborative based filtering 2. Content based filtering\n\n\nThe collaborative filtering is also called matrix completion. The simplest example for this type of algorithm is Similarity based algorithm.\nLet’s see an example of this algorithm\n#\nFor other types of algorithm, we need to first look at Matrix Factorization"
+    "text": "The recommendation engine are widely used to suggest content/itmes to user in persionalized manner. In Qwarke, users will choose the top 3 subject of interest. Data associated with the video including the title, authors, keywords, and key points are saved in the database. There are mainly two types of recommendation engine."
   },
   {
     "objectID": "posts/recom_engine/index.html#types-of-engine",
@@ -68,5 +68,19 @@
     "title": "About",
     "section": "",
     "text": "🌍  I’m based in New York, NY\n✉️  You can contact me at imvivek1695@gmail.com\n🧠  I’m learning DeepXDE, NVIDIA Modulus and TAO Toolkit\n🤝  I’m open to collaborating on Earth Science Systems and Climate"
+  },
+  {
+    "objectID": "posts/recom_engine/index.html#collaborative-based-filtering",
+    "href": "posts/recom_engine/index.html#collaborative-based-filtering",
+    "title": "Recommendation Engine: Introduction",
+    "section": "Collaborative based Filtering",
+    "text": "Collaborative based Filtering\nThe collaborative filtering is also called matrix completion. The simplest example for this type of algorithm is Similarity based algorithm.\n\nThe Correlation Algorithm\nFirst, we will look at the simplest data which does not have any features associated with either users or items.\nLet’s see an example of creating the correlation matrix\nCorrelation_matrix = df.corr(method='pearson')\n\nCorrelation_matrix['video_id'].sort_values(ascending=False).index[1:11]\nThis will give you the correlation matrix of the items or users giving a correlation values in the cells. The top 10 correlated content with the given content will be provided. If user X have watched item Y, then top correlated content with item Y can be recommended to the user.\n\n\nThe Matrix Factorization\nIn this method, the simplest matrix of users x videos will factorized using SVD (Singular Value Decomposition) method. To find matrix B of shape users x features and matrix C of shape videos x features,\n\\[\nargmin\\ \\Sigma (A_{ij} - B_{i}C^{T}_{j})^{2}\n\\]\nThe updated A matrix which will have empty values filled by,\n\\[\n\\hat{A} = B \\cdot C^{T}\n\\]"
+  },
+  {
+    "objectID": "posts/recom_engine/index.html#content-based-filtering",
+    "href": "posts/recom_engine/index.html#content-based-filtering",
+    "title": "Recommendation Engine: Introduction",
+    "section": "Content based Filtering",
+    "text": "Content based Filtering\nThe data is dynamic and user’s interest will change overtime. That is why the content based algorithm should be implemented for all user except for the new users. Data such as watch counts is collected over time as they watch more videos.\n\nThe Similarity Matrix\nFor other types of algorithm, we need to first look at Matrix Factorization\n\nThe cells in the above matrix can be populated with the various information collected, for example, binary (buy/no buy, played/not played, watched/not watched, bookmarked/not bookmarked) or discrete (ratings, total watch time, percentage of video watched).\nThe string type data (For example in Qwarke, title, keywords, key take away, and category of interest) can be converted in vector using CountVectorizer(). All the text feature can be combined in to one feature. Matrix of token count will be created where each combined feature will have all unique words counted in the columns.\nLet’s see an example of creating a similarity matrix\ncv = CountVectorize()\n\ncount_matrix = cv.fit_transform(data[\"combined_features\"])\n\ncosine_similarity_score = cosine_similarity(count_matrix)\nNow, the score calculated in the similarity matrix here is calculated on a feature.\n\n\nRecommendor Using PySpark\nThe data available can be as simple as users, items, and watch count. Let’s see an example of reccomending items based on this data using PySpark. The datafrmae has columns user_id, video, and watch_count. Using a StringIndexer, convert the string columns user_id and video to unique ids called user_id_index and video_index\nFor this we are using an Alternating Least Squares (ALS) method to fit the data.\n(training, test) = data.randomSplit([0.5, 0.5])\n\nUSERID = 'user_id_index'\nTRACK = 'video_index'\nCOUNT = 'watch_count'\n\nals = ALS(maxIter=5,\n          regParam=0.01,\n          userCol=USERID,\n          itemCol=TRACK,\n          ratingCol=COUNT)\n\nmodel = als.fit(training)\n\npredictions = model.transform(test)\nNow generate the top 10 recommendation for each users.\nrecs = model.recommendForAllUsers(10)\nrecs.take(1)\nThis will show the 10 recommended videos for user1.\n\n\nStacked Features"
   }
 ]

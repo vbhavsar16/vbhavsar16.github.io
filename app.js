@@ -1,12 +1,14 @@
-import React from "https://esm.sh/react@18";
+
+import React, { useEffect, useMemo, useState } from "https://esm.sh/react@18";
 import { createRoot } from "https://esm.sh/react-dom@18/client";
 
 const navLinks = [
   { id: "about", label: "About" },
-  { id: "experience", label: "Experience" },
+  { id: "impact", label: "Impact" },
   { id: "projects", label: "Projects" },
+  { id: "learning", label: "Learning Notes" },
+  { id: "adventures", label: "Adventures" },
   { id: "publications", label: "Publications" },
-  { id: "teaching", label: "Teaching" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -17,10 +19,10 @@ const experiences = [
     period: "Nov 2024 - Present",
     location: "Remote",
     points: [
-      "Led design and deployment of a court-safe, agentic Trial Deputy Assistant (TDA), a production RAG system on Azure Government with auditable, page-level citations.",
-      "Designed multi-knowledge-base architecture (Global KB, My KB, Cases-ready) with deterministic source attribution and metadata registries.",
-      "Established evaluation stack (OCR CER, boundary F1, retrieval MRR, acceptance rates) and enabled workforce adoption with templates and training.",
-      "Scaled PII redaction and NER workflows with PyTorch + ONNX and improved compliance posture for sensitive records.",
+      "Led design and deployment of Trial Deputy Assistant (TDA), an agentic RAG system for court-safe, auditable, page-level cited answers.",
+      "Designed multi-knowledge-base architecture and deterministic source attribution for defensible legal workflows.",
+      "Built evaluation pipelines spanning OCR quality, retrieval quality, and acceptance metrics for production readiness.",
+      "Enabled prosecutor training and reusable templates for mission-critical AI adoption.",
     ],
   },
   {
@@ -29,21 +31,9 @@ const experiences = [
     period: "May 2024 - Nov 2024",
     location: "Santa Clara, CA",
     points: [
-      "Designed RA-FSM, a finite-state RAG assistant controlling retrieve/abstain/answer behavior.",
-      "Introduced closed-world citations with claim→evidence audit tables to improve reviewability and citation fidelity.",
-      "Built reusable reliable-RAG components: retrieval controller, abstention policy, evidence viewer, and metrics logger.",
-      "Increased wafer testing efficiency by 70% via automation and Python-based analytics applications.",
-    ],
-  },
-  {
-    role: "Machine Learning Engineer",
-    company: "Qwarke, Inc.",
-    period: "Feb 2024 - Jul 2024",
-    location: "St. Petersburg, FL",
-    points: [
-      "Managed AWS ML pipeline using Step Functions, Lambda, Kinesis, PySpark, S3, and SageMaker.",
-      "Developed hybrid recommendation models (content + collaborative filtering) to improve user engagement.",
-      "Delivered scalable ML features in an Agile MLOps environment.",
+      "Designed RA-FSM: a reliability loop controlling retrieve/abstain/answer behavior in domain-specific assistants.",
+      "Implemented claim-to-evidence audit tables with closed-world citation controls to improve trust and reviewability.",
+      "Built reusable reliability components including retrieval controller, abstention policy, evidence viewer, and metrics logger.",
     ],
   },
 ];
@@ -54,29 +44,22 @@ const projects = [
     subtitle: "Agentic RAG for high-stakes legal workflows",
     stack: "Azure Gov, RAG, OCR, Evaluation, SAFE AI",
     summary:
-      "Production-oriented assistant for prosecutors that provides page-level cited answers across reports, transcripts, and exhibits.",
+      "Production assistant for prosecutors that answers questions across reports, transcripts, and exhibits with deterministic citations.",
   },
   {
     title: "RA-FSM",
-    subtitle: "Hallucination-resistant domain assistant",
+    subtitle: "Hallucination-resistant research assistant",
     stack: "LLMs, Retrieval, Finite-State Control",
     summary:
-      "Finite-state reliability loop (Relevance → Confidence → Knowledge) for budget-tunable accuracy and abstention behavior.",
+      "Reliability loop that improved retrieval quality and citation consistency while reducing unsupported claims.",
   },
   {
     title: "CropCatalyst",
     subtitle: "UN + Salesforce Reboot the Earth Challenge",
     stack: "Scikit-learn, XGBoost, CatBoost",
     summary:
-      "Crop-yield prediction and optimization assistant with actionable recommendations for farmers in native language contexts.",
+      "Crop-yield prediction and optimization assistant with practical, local-language recommendations for farmers.",
     link: "https://github.com/vbhavsar16/CropCatalyst",
-  },
-  {
-    title: "Flood Semantic Segmentation",
-    subtitle: "Disaster Risk Monitoring",
-    stack: "NVIDIA DALI, TAO, Triton, U-Net",
-    summary:
-      "Near real-time segmentation workflows for remote edge deployments supporting faster disaster response.",
   },
 ];
 
@@ -84,35 +67,109 @@ const publications = [
   "Bhavsar, V., & Jadamec, M. Dynamic variations in the zone of influence of the slab (in preparation), 2026.",
   "Bhavsar, V., Ereifej, J., Gurusami, A. Hallucination-Resistant, Domain-Specific Research Assistant with Self-Evaluation and Vector-Grounded Retrieval. arXiv:2510.02326, 2025.",
   "Bhavsar, V., Jadamec, M., Knepley, M. Influence of initial slab dip, plate interface coupling, and nonlinear rheology on dynamic weakening at the lithosphere-asthenosphere boundary. JGR Solid Earth, 2025.",
-  "Bhavsar, V., Jadamec, M., Knepley, M. Effect of Plate Coupling and Initial Slab Dip on Dynamic Weakening in the Asthenosphere. AGU Fall Meeting Abstracts, 2022.",
 ];
 
-function Section({ id, title, children }) {
+const defaultProfile = {
+  name: "Vivek Bhavsar",
+  tagline: "Applied Data Scientist | LLMs, RAG, Production ML",
+  headline: "Building reliable AI systems while sharing what I learn along the way.",
+  summary:
+    "I build production-grade ML and agentic RAG systems for high-stakes workflows. This site is both my portfolio and my learning playground.",
+  location: "Fremont, CA",
+  email: "imvivek1695@gmail.com",
+  phone: "+1 (845) 821-0998",
+  linkedin: "https://www.linkedin.com/in/vivekubuf/",
+  github: "https://github.com/vbhavsar16",
+  cvFile: "CV.pdf",
+  professionalPhoto: "data/photos/professional/main.jpg",
+  heroFallbackPhoto: "profile.jpg",
+};
+
+const impactStats = [
+  {
+    title: "Retrieval quality uplift",
+    value: "~25%",
+    note: "from baseline to final validated stack",
+  },
+  {
+    title: "Citation precision uplift",
+    value: "~29%",
+    note: "with hybrid retrieval + validation pipeline",
+  },
+  {
+    title: "Unsupported claims reduced",
+    value: "~83%",
+    note: "through evidence packet + validator",
+  },
+  {
+    title: "End-to-end latency increase",
+    value: "~43%",
+    note: "tradeoff accepted for reliability in high-stakes use",
+  },
+];
+
+function Section({ id, title, subtitle, children }) {
   return React.createElement(
     "section",
     { id, className: "section" },
     React.createElement("h2", null, title),
+    subtitle ? React.createElement("p", { className: "section-subtitle" }, subtitle) : null,
     children,
   );
 }
 
+function Card({ children, className = "" }) {
+  return React.createElement("article", { className: `card ${className}`.trim() }, children);
+}
+
+async function safeFetchJson(path, fallback) {
+  try {
+    const res = await fetch(path);
+    if (!res.ok) return fallback;
+    return await res.json();
+  } catch {
+    return fallback;
+  }
+}
+
 function App() {
+  const [profile, setProfile] = useState(defaultProfile);
+  const [notes, setNotes] = useState([]);
+  const [adventures, setAdventures] = useState([]);
+  const [photoSrc, setPhotoSrc] = useState(defaultProfile.professionalPhoto);
+
+  useEffect(() => {
+    safeFetchJson("data/profile.json", defaultProfile).then((data) => {
+      const merged = { ...defaultProfile, ...data };
+      setProfile(merged);
+      setPhotoSrc(merged.professionalPhoto || merged.heroFallbackPhoto);
+    });
+    safeFetchJson("data/notes/notes.json", []).then(setNotes);
+    safeFetchJson("data/adventures/adventures.json", []).then(setAdventures);
+  }, []);
+
+  const sortedNotes = useMemo(
+    () => [...notes].sort((a, b) => (a.date < b.date ? 1 : -1)),
+    [notes],
+  );
+
+  const sortedAdventures = useMemo(
+    () => [...adventures].sort((a, b) => (a.date < b.date ? 1 : -1)),
+    [adventures],
+  );
+
   return React.createElement(
     React.Fragment,
     null,
     React.createElement(
       "header",
       { className: "topbar" },
-      React.createElement("a", { href: "#", className: "brand" }, "Vivek Bhavsar"),
+      React.createElement("a", { href: "#", className: "brand" }, profile.name),
       React.createElement(
         "nav",
         null,
         navLinks.map((link) =>
-          React.createElement(
-            "a",
-            { key: link.id, href: `#${link.id}` },
-            link.label,
-          ),
+          React.createElement("a", { key: link.id, href: `#${link.id}` }, link.label),
         ),
       ),
     ),
@@ -123,61 +180,67 @@ function App() {
       React.createElement(
         "section",
         { className: "hero" },
-        React.createElement("img", { src: "profile.jpg", alt: "Vivek Bhavsar", className: "avatar" }),
+        React.createElement("img", {
+          src: photoSrc,
+          alt: `${profile.name} professional portrait`,
+          className: "avatar",
+          onError: () => setPhotoSrc(profile.heroFallbackPhoto),
+        }),
         React.createElement(
           "div",
           null,
-          React.createElement("p", { className: "eyebrow" }, "Applied Data Scientist | LLMs, RAG, Production ML"),
-          React.createElement("h1", null, "Building reliable, auditable AI systems for high-stakes decisions."),
-          React.createElement(
-            "p",
-            { className: "lead" },
-            "I specialize in deploying production-grade ML and agentic RAG systems across cloud and enterprise settings, with emphasis on safety, measurable impact, and operational scale.",
-          ),
+          React.createElement("p", { className: "eyebrow" }, profile.tagline),
+          React.createElement("h1", null, profile.headline),
+          React.createElement("p", { className: "lead" }, profile.summary),
           React.createElement(
             "div",
             { className: "cta" },
-            React.createElement("a", { href: "CV.pdf", className: "btn btn-primary" }, "Download CV"),
-            React.createElement("a", { href: "https://github.com/vbhavsar16", className: "btn", target: "_blank", rel: "noreferrer" }, "GitHub"),
-            React.createElement("a", { href: "https://www.linkedin.com/in/vivekubuf/", className: "btn", target: "_blank", rel: "noreferrer" }, "LinkedIn"),
+            React.createElement("a", { href: profile.cvFile, className: "btn btn-primary" }, "Download CV"),
+            React.createElement("a", { href: profile.github, className: "btn", target: "_blank", rel: "noreferrer" }, "GitHub"),
+            React.createElement("a", { href: profile.linkedin, className: "btn", target: "_blank", rel: "noreferrer" }, "LinkedIn"),
+            React.createElement("a", { href: "#learning", className: "btn" }, "Open Learning Notes"),
           ),
-          React.createElement(
-            "div",
-            { className: "metrics" },
-            React.createElement("span", null, "5+ years experience"),
-            React.createElement("span", null, "70% efficiency improvement delivered"),
-            React.createElement("span", null, "Ph.D. in Computation & Applied Mathematics"),
-          ),
+          React.createElement("p", { className: "playful" }, "⚡ Portfolio by profession, learning log by passion."),
         ),
       ),
 
       React.createElement(
         Section,
-        { id: "about", title: "About" },
-        React.createElement(
-          "p",
-          null,
-          "Based in Fremont, CA, I partner with cross-functional teams to build robust ML solutions spanning RAG, text analytics, recommendation systems, and distributed training. My work combines scientific rigor with practical product execution.",
-        ),
-      ),
-
-      React.createElement(
-        Section,
-        { id: "experience", title: "Experience" },
+        {
+          id: "about",
+          title: "About",
+          subtitle:
+            "I like shipping production systems, explaining what I learn, and balancing it with tennis and outdoor adventures.",
+        },
         React.createElement(
           "div",
-          { className: "cards" },
-          experiences.map((exp) =>
+          { className: "chips" },
+          React.createElement("span", null, "LLM Applications"),
+          React.createElement("span", null, "RAG Reliability"),
+          React.createElement("span", null, "Evaluation & Auditability"),
+          React.createElement("span", null, "Cloud + MLOps"),
+          React.createElement("span", null, "Scientific ML"),
+        ),
+      ),
+
+      React.createElement(
+        Section,
+        {
+          id: "impact",
+          title: "RAG Reliability Impact (Internal, Not Yet Published)",
+          subtitle:
+            "Numbers shown as directional percentage shifts only. Raw experimental values are intentionally omitted.",
+        },
+        React.createElement(
+          "div",
+          { className: "cards grid-2" },
+          impactStats.map((item) =>
             React.createElement(
-              "article",
-              { className: "card", key: exp.role + exp.company },
-              React.createElement("h3", null, exp.role),
-              React.createElement("p", { className: "meta" }, `${exp.company} • ${exp.location} • ${exp.period}`),
-              React.createElement(
-                "ul",
-                null,
-                exp.points.map((point) => React.createElement("li", { key: point }, point)),
-              ),
+              Card,
+              { key: item.title, className: "impact-card" },
+              React.createElement("p", { className: "impact-label" }, item.title),
+              React.createElement("p", { className: "impact-value" }, item.value),
+              React.createElement("p", { className: "meta" }, item.note),
             ),
           ),
         ),
@@ -191,8 +254,8 @@ function App() {
           { className: "cards grid-2" },
           projects.map((proj) =>
             React.createElement(
-              "article",
-              { className: "card", key: proj.title },
+              Card,
+              { key: proj.title },
               React.createElement("h3", null, proj.title),
               React.createElement("p", { className: "meta" }, proj.subtitle),
               React.createElement("p", null, proj.summary),
@@ -207,40 +270,101 @@ function App() {
 
       React.createElement(
         Section,
+        { id: "learning", title: "Learning Notes", subtitle: "A running notebook of what I study and test." },
+        React.createElement(
+          "div",
+          { className: "cards grid-2" },
+          sortedNotes.length
+            ? sortedNotes.map((note) =>
+                React.createElement(
+                  Card,
+                  { key: note.title },
+                  React.createElement("h3", null, note.title),
+                  React.createElement("p", { className: "meta" }, note.date),
+                  React.createElement("p", null, note.summary),
+                  React.createElement(
+                    "div",
+                    { className: "chips" },
+                    (note.tags || []).map((tag) => React.createElement("span", { key: `${note.title}-${tag}` }, tag)),
+                  ),
+                  note.file ? React.createElement("a", { href: note.file, target: "_blank", rel: "noreferrer" }, "Open note →") : null,
+                ),
+              )
+            : React.createElement("p", { className: "meta" }, "No notes loaded yet. Add entries in data/notes/notes.json."),
+        ),
+      ),
+
+      React.createElement(
+        Section,
+        { id: "adventures", title: "Adventures", subtitle: "Tennis, travel, and moments that keep me curious." },
+        React.createElement(
+          "div",
+          { className: "cards grid-3" },
+          sortedAdventures.length
+            ? sortedAdventures.map((trip) =>
+                React.createElement(
+                  Card,
+                  { key: `${trip.title}-${trip.date}` },
+                  React.createElement("img", {
+                    src: trip.image,
+                    alt: trip.title,
+                    className: "adventure-photo",
+                  }),
+                  React.createElement("h3", null, trip.title),
+                  React.createElement("p", { className: "meta" }, `${trip.location} • ${trip.date}`),
+                  React.createElement("p", null, trip.caption),
+                ),
+              )
+            : React.createElement("p", { className: "meta" }, "No adventure photos loaded yet. Add items in data/adventures/adventures.json."),
+        ),
+      ),
+
+      React.createElement(
+        Section,
         { id: "publications", title: "Publications & Talks" },
         React.createElement(
           "ul",
           { className: "pubs" },
           publications.map((pub) => React.createElement("li", { key: pub }, pub)),
         ),
-        React.createElement("p", { className: "meta" }, "Invited talks: GLY-326 Structure/Global Tectonics (UB, Fall 2022); GVG Seminar (UB, Spring 2022)."),
-      ),
-
-      React.createElement(
-        Section,
-        { id: "teaching", title: "Teaching" },
-        React.createElement(
-          "ul",
-          null,
-          React.createElement("li", null, "TA, Intro to Numerical Mathematics for Data Scientists (2021)"),
-          React.createElement("li", null, "TA, Data Structures (2018–2019)"),
-          React.createElement("li", null, "TA, Natural Hazards (2019–2020)"),
-        ),
       ),
 
       React.createElement(
         Section,
         { id: "contact", title: "Contact" },
-        React.createElement("p", null, "Fremont, CA"),
-        React.createElement("p", null, React.createElement("a", { href: "mailto:imvivek1695@gmail.com" }, "imvivek1695@gmail.com")),
-        React.createElement("p", null, "+1 (845) 821-0998"),
+        React.createElement("p", null, profile.location),
+        React.createElement("p", null, React.createElement("a", { href: `mailto:${profile.email}` }, profile.email)),
+        React.createElement("p", null, profile.phone),
+      ),
+
+      React.createElement(
+        Section,
+        { id: "experience", title: "Experience Snapshot" },
+        React.createElement(
+          "div",
+          { className: "cards" },
+          experiences.map((exp) =>
+            React.createElement(
+              Card,
+              { key: `${exp.role}-${exp.company}` },
+              React.createElement("h3", null, exp.role),
+              React.createElement("p", { className: "meta" }, `${exp.company} • ${exp.location} • ${exp.period}`),
+              React.createElement(
+                "ul",
+                null,
+                exp.points.map((point) => React.createElement("li", { key: point }, point)),
+              ),
+            ),
+          ),
+        ),
       ),
     ),
 
     React.createElement(
       "footer",
       { className: "footer" },
-      `© ${new Date().getFullYear()} Vivek Bhavsar`
+      React.createElement("p", null, `© ${new Date().getFullYear()} ${profile.name}`),
+      React.createElement("p", { className: "meta" }, "Content locations documented in CONTENT_GUIDE.md"),
     ),
   );
 }

@@ -1,1 +1,154 @@
-/* css styles */
+:root {
+  --bg: #0f1223;
+  --bg-soft: #181d35;
+  --surface: #202746;
+  --text: #edf1ff;
+  --muted: #b0bad9;
+  --line: #33406c;
+  --accent: #80b3ff;
+  --accent-2: #80ffd4;
+  --warm: #ffc880;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--text);
+  line-height: 1.6;
+  background:
+    radial-gradient(800px 400px at 10% -10%, #324fba44 0%, transparent 60%),
+    radial-gradient(700px 350px at 100% 0%, #1f9f9940 0%, transparent 60%),
+    var(--bg);
+}
+
+a { color: var(--accent-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .8rem;
+  flex-wrap: wrap;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  background: rgba(15, 18, 35, 0.82);
+}
+.brand { color: var(--text); font-weight: 800; }
+.topbar nav { display: flex; gap: 0.85rem; flex-wrap: wrap; }
+.topbar nav a { color: var(--muted); font-size: .95rem; }
+
+.container { width: min(1080px, 92%); margin: 1.6rem auto 3.5rem; }
+.hero {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 1.4rem;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: linear-gradient(150deg, #1f2b5544, #2334442a);
+  border-radius: 18px;
+  padding: 1.5rem;
+}
+.avatar {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 1rem;
+  border: 2px solid var(--line);
+  box-shadow: 0 10px 35px #00000050;
+}
+.eyebrow {
+  margin: 0 0 .5rem;
+  color: var(--accent);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: .8rem;
+  font-weight: 700;
+}
+h1 { margin: 0; font-size: clamp(1.6rem, 4.2vw, 2.6rem); line-height: 1.2; }
+.lead { color: var(--muted); max-width: 72ch; }
+.playful { margin: .3rem 0 0; color: var(--warm); font-weight: 600; }
+
+.cta { display: flex; gap: .65rem; flex-wrap: wrap; margin: 1rem 0 .75rem; }
+.btn {
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 999px;
+  padding: .55rem .9rem;
+  background: #ffffff09;
+  font-size: .92rem;
+}
+.btn-primary {
+  background: linear-gradient(130deg, var(--accent), #9dd6ff);
+  border: none;
+  color: #121726;
+  font-weight: 700;
+}
+.btn:hover { text-decoration: none; transform: translateY(-1px); }
+
+.section { margin-top: 2rem; }
+.section h2 { margin: 0 0 .4rem; font-size: 1.35rem; }
+.section-subtitle { color: var(--muted); margin-top: 0; }
+
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+.chips span {
+  border: 1px solid var(--line);
+  color: var(--muted);
+  border-radius: 999px;
+  font-size: .82rem;
+  padding: .25rem .6rem;
+  background: #ffffff06;
+}
+
+.cards { display: grid; gap: .9rem; }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff08, #ffffff03);
+  padding: 1rem;
+}
+.card h3 { margin-top: 0; margin-bottom: .3rem; }
+.meta { color: var(--muted); font-size: .93rem; }
+.stack { color: var(--accent-2); font-size: .88rem; }
+
+.impact-card { border-color: #3f5ea4; }
+.impact-label { margin: 0; color: var(--muted); font-size: .9rem; }
+.impact-value { margin: .15rem 0; font-size: 1.8rem; font-weight: 800; color: var(--accent-2); }
+
+.adventure-photo {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  margin-bottom: .7rem;
+}
+
+.pubs { padding-left: 1.1rem; }
+
+.footer {
+  border-top: 1px solid var(--line);
+  text-align: center;
+  color: var(--muted);
+  padding: 1rem;
+}
+.footer p { margin: .2rem 0; }
+
+@media (max-width: 900px) {
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; }
+  .avatar { width: 110px; height: 110px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Weekend Tennis Session",
+    "date": "2025-01-12",
+    "location": "Bay Area",
+    "caption": "Drills, rallies, and one-handed backhand experiments.",
+    "image": "data/adventures/photos/tennis-session-1.jpg"
+  },
+  {
+    "title": "Trail and City Walk",
+    "date": "2025-02-02",
+    "location": "California",
+    "caption": "A reset day before diving back into model evaluations.",
+    "image": "data/adventures/photos/adventure-1.jpg"
+  }
+]

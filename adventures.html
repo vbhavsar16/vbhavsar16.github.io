@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adventures | Vivek Bhavsar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="site">
+    <h1>Adventures</h1>
+    <p class="lead">Tennis, travel, and outdoor moments that keep life balanced.</p>
+    <div class="grid-2" id="adventure-grid"></div>
+  </main>
+
+  <script src="main.js"></script>
+  <script>
+    async function init() {
+      const grid = document.getElementById('adventure-grid');
+      let items = [];
+      try {
+        const r = await fetch('data/adventures/adventures.json');
+        if (r.ok) items = await r.json();
+      } catch {}
+
+      if (!items.length) {
+        grid.innerHTML = '<p class="muted">No adventures yet. Add entries in data/adventures/adventures.json.</p>';
+        return;
+      }
+
+      items.sort((a,b)=>a.date < b.date ? 1 : -1);
+      grid.innerHTML = items.map(i => `
+        <article class="card">
+          <img class="photo" src="${i.image}" alt="${i.title}" />
+          <h3>${i.title}</h3>
+          <p class="muted">${i.location} · ${i.date}</p>
+          <p>${i.caption}</p>
+        </article>
+      `).join('');
+    }
+    init();
+  </script>
+</body>
+</html>

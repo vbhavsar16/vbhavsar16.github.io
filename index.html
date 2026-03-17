@@ -1,17 +1,77 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vivek Bhavsar | Applied Data Scientist</title>
-    <meta name="description" content="Portfolio of Vivek Bhavsar — Applied Data Scientist specializing in LLMs, RAG, and production ML." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="app.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vivek Bhavsar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="site">
+    <section class="hero" id="hero"></section>
+
+    <h2>Current Focus</h2>
+    <div class="grid-2">
+      <article class="card">
+        <h3>Trial Deputy Assistant (TDA)</h3>
+        <p class="muted">Agentic RAG for high-stakes legal workflows</p>
+        <p>Designing auditable, page-level cited answers across multi-document legal evidence corpora.</p>
+      </article>
+      <article class="card">
+        <h3>RA-FSM</h3>
+        <p class="muted">Reliability-first research assistant</p>
+        <p>Finite-state control for retrieve/abstain/answer behavior with stronger citation quality and lower unsupported claims.</p>
+      </article>
+    </div>
+
+    <h2>Reliability Improvements (Internal Directional Summary)</h2>
+    <div class="grid-2">
+      <article class="card"><h3>Retrieval quality</h3><p><strong>~25% improvement</strong> from baseline to validated stack.</p></article>
+      <article class="card"><h3>Citation precision</h3><p><strong>~29% improvement</strong> with hybrid retrieval + validation.</p></article>
+      <article class="card"><h3>Unsupported claims</h3><p><strong>~83% reduction</strong> after evidence packet + validator.</p></article>
+      <article class="card"><h3>Latency tradeoff</h3><p><strong>~43% increase</strong> accepted for higher trust in high-stakes use.</p></article>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+  <script>
+    async function init() {
+      const defaults = {
+        name: 'Vivek Bhavsar',
+        tagline: 'Applied Data Scientist | LLMs, RAG, Production ML',
+        summary: 'I build reliable, production ML systems and document what I learn.',
+        professionalPhoto: 'data/photos/professional/main.jpg',
+        heroFallbackPhoto: 'profile.jpg',
+        cvFile: 'CV.pdf',
+        github: 'https://github.com/vbhavsar16',
+        linkedin: 'https://www.linkedin.com/in/vivekubuf/'
+      };
+      let p = defaults;
+      try {
+        const r = await fetch('data/profile.json');
+        if (r.ok) p = { ...defaults, ...(await r.json()) };
+      } catch {}
+      const hero = document.getElementById('hero');
+      hero.innerHTML = `
+        <img src="${p.professionalPhoto}" onerror="this.src='${p.heroFallbackPhoto}'" alt="${p.name} professional photo" />
+        <div>
+          <p class="muted">${p.tagline}</p>
+          <h1>${p.name}</h1>
+          <p class="lead">${p.summary}</p>
+          <div class="cta-row">
+            <a class="btn" href="about.html">About</a>
+            <a class="btn" href="projects.html">Projects</a>
+            <a class="btn" href="notes.html">Notes</a>
+            <a class="btn" href="${p.cvFile}">Download CV</a>
+            <a class="btn" href="${p.github}" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="btn" href="${p.linkedin}" target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
+        </div>`;
+    }
+    init();
+  </script>
+</body>
 </html>

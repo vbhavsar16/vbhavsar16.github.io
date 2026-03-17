@@ -1,0 +1,14 @@
+{
+  "name": "Vivek Bhavsar",
+  "tagline": "Applied Data Scientist | LLMs, RAG, Production ML",
+  "headline": "Building reliable AI systems while sharing what I learn along the way.",
+  "summary": "I build production-grade ML and agentic RAG systems for high-stakes workflows. This site is both my portfolio and my learning playground for notes, experiments, and adventures.",
+  "location": "Fremont, CA",
+  "email": "imvivek1695@gmail.com",
+  "phone": "+1 (845) 821-0998",
+  "linkedin": "https://www.linkedin.com/in/vivekubuf/",
+  "github": "https://github.com/vbhavsar16",
+  "cvFile": "CV.pdf",
+  "professionalPhoto": "data/photos/professional/main.jpg",
+  "heroFallbackPhoto": "profile.jpg"
+}

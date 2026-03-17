@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Recommendation Engine: Introduction",
+    "date": "2024-04-28",
+    "topic": "Machine Learning",
+    "tags": ["Recommender Systems", "Product ML"],
+    "summary": "Content + collaborative filtering notes from real-world product scenarios.",
+    "file": "data/notes/recommendation-engine-intro.md"
+  },
+  {
+    "title": "PINN Intro Notes",
+    "date": "2024-04-17",
+    "topic": "Scientific ML",
+    "tags": ["PINNs", "Differential Equations"],
+    "summary": "Study notes from revisiting Physics-Informed Neural Networks.",
+    "file": "data/notes/pinn-intro.md"
+  }
+]

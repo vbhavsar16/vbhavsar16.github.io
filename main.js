@@ -1,28 +1,37 @@
-const path = window.location.pathname.split('/').pop() || 'index.html';
-
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+const isHome = document.currentScript.hasAttribute('data-home');
 const nav = [
-  ['index.html', 'Home'],
-  ['about.html', 'About'],
+  [isHome ? '#research' : 'index.html#research', 'Research'],
+  [isHome ? '#experience' : 'index.html#experience', 'Experience'],
   ['projects.html', 'Projects'],
   ['notes.html', 'Notes'],
   ['adventures.html', 'Adventures'],
-  ['CV.html', 'CV']
+  ['CV.html', 'Résumé']
 ];
 
-function header() {
-  const tabs = nav.map(([href, label]) => `<a class="tab ${href===path?'active':''}" href="${href}">${label}</a>`).join('');
-  return `
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="index.html">Vivek Bhavsar</a>
-      <nav class="tabs">${tabs}</nav>
+const links = nav.map(([href, label]) => {
+  const current = href === currentPage ? ' aria-current="page"' : '';
+  return `<a href="${href}"${current}>${label}</a>`;
+}).join('');
+
+const header = `
+  <header class="header">
+    <div class="shell header-inner">
+      <a class="brand" href="index.html"><span class="monogram" aria-hidden="true">VB</span> Vivek Bhavsar</a>
+      <nav aria-label="Main navigation">${links}</nav>
+      <a class="header-contact" href="${isHome ? '#contact' : 'index.html#contact'}">Contact <span aria-hidden="true">↗</span></a>
     </div>
   </header>`;
-}
 
-function footer() {
-  return `<footer><div class="site">© ${new Date().getFullYear()} Vivek Bhavsar</div></footer>`;
+if (isHome) {
+  document.querySelector('.skip').insertAdjacentHTML('afterend', header);
+} else {
+  document.body.insertAdjacentHTML('afterbegin', '<a class="skip" href="#main">Skip to content</a>' + header);
+  document.body.insertAdjacentHTML('beforeend', `
+    <footer class="footer">
+      <div class="shell footer-bottom">
+        <a href="about.html">About Vivek</a>
+        <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
+      </div>
+    </footer>`);
 }
-
-document.body.insertAdjacentHTML('afterbegin', header());
-document.body.insertAdjacentHTML('beforeend', footer());

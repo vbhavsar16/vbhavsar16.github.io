@@ -6,12 +6,10 @@ This site uses simple multi-page tabs:
 - `projects.html`
 - `notes.html`
 - `adventures.html`
-- `CV.html`
+- `CV.html` (Résumé)
 
 ## 1) Professional photo
-- Preferred path: `data/photos/professional/main.jpg`
-- Fallback path: `profile.jpg`
-- Config lives in `data/profile.json` (`professionalPhoto`, `heroFallbackPhoto`).
+- Replace `data/photos/professional/main.jpg` to update the homepage portrait.
 
 ## 2) Notes content (topic tabs + readable markdown)
 - Note index file: `data/notes/notes.json`
@@ -48,7 +46,8 @@ Each item:
 - `date` (`YYYY-MM-DD`)
 - `location`
 - `caption`
-- `image` (relative image path)
+- `image` (optional relative path to a photo)
 
-## 4) Profile/contact links
-- Update `data/profile.json` for email, phone, GitHub, LinkedIn, and tagline.
+## 4) Résumé and contact links
+- Replace `CV.pdf` and update the date and download filename in `CV.html`.
+- Update the contact links in `index.html`.

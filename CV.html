@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CV | Vivek Bhavsar</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Résumé | Vivek Bhavsar</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <main class="site">
-    <h1>CV</h1>
-    <p class="lead">View or download full curriculum vitae.</p>
-    <p><a class="btn" href="CV.pdf">Download CV PDF</a></p>
-    <object data="CV.pdf" type="application/pdf" width="100%" height="900">
-      <p>PDF preview unavailable. <a href="CV.pdf">Click here to download.</a></p>
+<body id="top">
+  <main class="shell subpage" id="main">
+    <h1>Résumé</h1>
+    <p class="lead">October 2026 · For the latest status of TRACE, see the <a href="index.html#research">research section</a>.</p>
+    <div class="resume-actions">
+      <a class="button button-dark" href="CV.pdf" download="Resume_Vivek_Bhavsar_10-2026.pdf">Download résumé <span aria-hidden="true">↓</span></a>
+      <a class="text-link" href="CV.pdf">Open PDF <span aria-hidden="true">↗</span></a>
+    </div>
+    <object class="resume-preview" data="CV.pdf" type="application/pdf" aria-label="Vivek Bhavsar’s October 2026 résumé">
+      <p>PDF preview unavailable. <a href="CV.pdf">Open the résumé PDF.</a></p>
     </object>
   </main>
   <script src="main.js"></script>

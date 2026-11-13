@@ -1,77 +1,176 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vivek Bhavsar</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vivek Bhavsar | Principal Data Scientist & AI Researcher</title>
+  <meta name="description" content="Vivek Bhavsar builds and evaluates language-model systems for high-stakes work. Explore research, production systems, and experience.">
+  <meta name="theme-color" content="#f7f7ef">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <main class="site">
-    <section class="hero" id="hero"></section>
+<body id="top">
+  <a class="skip" href="#main">Skip to content</a>
 
-    <h2>Current Focus</h2>
-    <div class="grid-2">
-      <article class="card">
-        <h3>Trial Deputy Assistant (TDA)</h3>
-        <p class="muted">Agentic RAG for high-stakes legal workflows</p>
-        <p>Designing auditable, page-level cited answers across multi-document legal evidence corpora.</p>
-      </article>
-      <article class="card">
-        <h3>RA-FSM</h3>
-        <p class="muted">Reliability-first research assistant</p>
-        <p>Finite-state control for retrieve/abstain/answer behavior with stronger citation quality and lower unsupported claims.</p>
-      </article>
+  <main id="main">
+    <div class="shell">
+      <section class="hero" aria-labelledby="intro">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Principal Data Scientist &amp; AI Researcher</p>
+          <h1 id="intro">Building AI<br>that can be <em>verified.</em></h1>
+          <p class="intro">I’m Vivek Bhavsar. I lead AI research and data science at the Los Angeles County District Attorney’s Office, where I build and evaluate language-model systems for high-stakes work.</p>
+          <div class="hero-links">
+            <a class="button button-dark" href="#research">Explore my research <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="CV.html">View résumé <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <img src="data/photos/professional/main.jpg" width="800" height="800" alt="Portrait of Vivek Bhavsar" fetchpriority="high">
+        </figure>
+      </section>
+      <dl class="hero-metrics" aria-label="Selected results">
+        <div><dt>Case-preparation efficiency</dt><dd>&gt;80% <span>improvement</span></dd></div>
+        <div><dt>Evidence volume</dt><dd>5,000+ <span>files in complex cases</span></dd></div>
+        <div><dt>TRACE human-gated workflow</dt><dd>98.6% <span>citation precision</span></dd></div>
+      </dl>
     </div>
 
-    <h2>Reliability Improvements (Internal Directional Summary)</h2>
-    <div class="grid-2">
-      <article class="card"><h3>Retrieval quality</h3><p><strong>~25% improvement</strong> from baseline to validated stack.</p></article>
-      <article class="card"><h3>Citation precision</h3><p><strong>~29% improvement</strong> with hybrid retrieval + validation.</p></article>
-      <article class="card"><h3>Unsupported claims</h3><p><strong>~83% reduction</strong> after evidence packet + validator.</p></article>
-      <article class="card"><h3>Latency tradeoff</h3><p><strong>~43% increase</strong> accepted for higher trust in high-stakes use.</p></article>
-    </div>
+    <section class="section shell" id="research" aria-labelledby="research-heading">
+      <div class="section-heading">
+        <p class="eyebrow">Selected research</p>
+        <div>
+          <h2 id="research-heading">Measuring AI reliability</h2>
+          <p>I study how to trace claims to evidence, catch errors before they propagate, and route uncertain decisions to human reviewers.</p>
+        </div>
+      </div>
+
+      <details class="research-item" open>
+        <summary>
+          <span class="research-title"><span class="eyebrow">Workflow evaluation · Manuscript in progress</span><span class="item-heading">TRACE</span></span>
+          <span class="result"><strong>100% → 18.8%</strong><span>Downstream fault propagation</span></span>
+          <span class="expand" aria-hidden="true"></span>
+        </summary>
+        <div class="research-content">
+          <p>TRACE evaluates legal agents as deterministic workflows over typed, source-linked artifacts. It combines claim-level citation checks, tamper-evident logs, and staged attorney approval.</p>
+          <p>I withdrew TRACE from AAAI 2027 and plan to submit a revised manuscript to another conference.</p>
+          <p>In a preregistered fault-injection study, automated verification reduced downstream fault propagation from 100% to 18.8% (<i>p</i> = .008).</p>
+          <div class="table-wrap">
+            <table>
+              <caption>TRACE study results</caption>
+              <thead><tr><th scope="col">Workflow</th><th scope="col">Citation precision</th><th scope="col">Unsupported claims</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Human-gated TRACE</th><td>98.6%</td><td>6.7%</td></tr>
+                <tr><th scope="row">One-shot RAG</th><td>84.0%</td><td>20.8%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+
+      <details class="research-item">
+        <summary>
+          <span class="research-title"><span class="eyebrow">Grounded legal question answering</span><span class="item-heading">Claim-level hallucination metrics</span></span>
+          <span class="result"><strong>0.91 AUC</strong><span>Against human labels</span></span>
+          <span class="expand" aria-hidden="true"></span>
+        </summary>
+        <div class="research-content">
+          <p>I developed the Hallucination Risk Score and Legal Evidence Reliance Score to assess evidence support, citation support, parametric drift, and retrieval weakness at the level of individual claims.</p>
+          <p>Validation covered 250 answers and 1,438 claims. Route-aware retrieval-augmented generation (RAG) cut measured hallucination risk by 38% at 16% lower cost, and reranked hybrid retrieval improved Hit@k from 0.78 to 0.96.</p>
+        </div>
+      </details>
+
+      <details class="research-item">
+        <summary>
+          <span class="research-title"><span class="eyebrow">Document understanding</span><span class="item-heading">Calibrated evidence classification</span></span>
+          <span class="result"><strong>97.2%</strong><span>Held-out accuracy</span></span>
+          <span class="expand" aria-hidden="true"></span>
+        </summary>
+        <div class="research-content">
+          <p>I built a hierarchical MPNet classifier for 11 document types and six fraud subtypes. Selective abstention routes uncertain classifications to human review before the evidence reaches downstream models.</p>
+          <p>On leakage-controlled grouped splits, it achieved 0.96 macro-F1 and 0.028 expected calibration error at 98.6% coverage. Its ONNX export preserved top-1 predictions exactly.</p>
+        </div>
+      </details>
+    </section>
+
+    <section class="experience" id="experience" aria-labelledby="experience-heading">
+      <div class="shell section">
+        <div class="section-heading">
+          <p class="eyebrow">Career</p>
+          <div><h2 id="experience-heading">Experience</h2></div>
+        </div>
+        <article class="job featured-job">
+          <div class="job-meta"><p>Oct 2025 – Present</p><p>Los Angeles, CA</p></div>
+          <div>
+            <h3>Los Angeles County District Attorney’s Office</h3>
+            <p class="job-role">Principal Data Scientist, Head of AI Research &amp; Data Science</p>
+            <p>I built and now lead a production agentic AI platform for prosecutors on Azure Government. It supports case preparation across scanned exhibits, transcripts, audio, video, and financial records.</p>
+            <ul>
+              <li>Worked with deputy district attorneys to design seven workflows with explicit judgment boundaries, stop conditions, and audit rules.</li>
+              <li>Built citation-enforced filing recommendations and investigative tools for governed SQL, link analysis, and spreadsheet analysis.</li>
+              <li>Secured evidence tools with authenticated MCP access, one-use approval tokens for writes, and hash-based audit events.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="job">
+          <div class="job-meta"><p>Oct 2024 – Oct 2025</p><p>Remote</p></div>
+          <div><h3>Microsoft</h3><p class="job-role">Applied Data Scientist</p><p>Led text analytics across transcripts, documents, and conversations. Fine-tuned language models, built RAG pipelines, and deployed PyTorch models for named entity recognition and PII redaction with ONNX.</p></div>
+        </article>
+        <article class="job">
+          <div class="job-meta"><p>May 2024 – Nov 2024<br>May 2025 – Oct 2025</p><p>Santa Clara, CA</p></div>
+          <div><h3>Coherent Corp.</h3><p class="job-role">Data Scientist, CTO Office</p><p>Designed RA-FSM, a research assistant that uses a finite-state loop to retrieve evidence, answer, or abstain. Built wafer-yield analysis tools and improved wafer testing efficiency by 70% with Python automation.</p></div>
+        </article>
+        <article class="job">
+          <div class="job-meta"><p>Feb 2024 – Jul 2024</p><p>Remote</p></div>
+          <div><h3>Qwarke, Inc.</h3><p class="job-role">Machine Learning Engineer</p><p>Owned the AWS machine-learning pipeline for a scholarly social platform and built a hybrid video recommender that matched suggestions to users’ fields of expertise.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell" id="projects" aria-labelledby="projects-heading">
+      <div class="section-heading">
+        <p class="eyebrow">Applied machine learning</p>
+        <div><h2 id="projects-heading">Selected projects</h2></div>
+      </div>
+      <div class="projects">
+        <article class="project">
+          <p class="eyebrow">UN &amp; Salesforce · Reboot the Earth Challenge</p>
+          <h3>CropCatalyst</h3>
+          <p>Predicted crop yields from agrometeorological data with ensemble models and translated yield-gap analysis into native-language advice for farmers.</p>
+          <a class="text-link" href="https://github.com/vbhavsar16/CropCatalyst">View repository <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="project">
+          <p class="eyebrow">Satellite imagery · NVIDIA Toolkit</p>
+          <h3>Flood segmentation</h3>
+          <p>Trained a U-Net to identify flooded areas in satellite radar imagery for disaster-risk monitoring, using NVIDIA DALI and TAO with deployment on Triton Inference Server.</p>
+        </article>
+      </div>
+      <a class="text-link all-projects" href="projects.html">More projects <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="shell education" aria-labelledby="education-heading">
+      <h2 id="education-heading">Education</h2>
+      <div class="degrees">
+        <div><h3>PhD, Computation and Applied Mathematics</h3><p>University at Buffalo, SUNY · 2024</p></div>
+        <div><h3>MS, Mechanical Engineering</h3><p>University at Buffalo, SUNY · 2018</p></div>
+        <div><h3>BE, Mechanical Engineering</h3><p>Gujarat Technological University · 2016</p></div>
+      </div>
+    </section>
   </main>
 
-  <script src="main.js"></script>
-  <script>
-    async function init() {
-      const defaults = {
-        name: 'Vivek Bhavsar',
-        tagline: 'Applied Data Scientist | LLMs, RAG, Production ML',
-        summary: 'I build reliable, production ML systems and document what I learn.',
-        professionalPhoto: 'data/photos/professional/main.jpg',
-        heroFallbackPhoto: 'profile.jpg',
-        cvFile: 'CV.pdf',
-        github: 'https://github.com/vbhavsar16',
-        linkedin: 'https://www.linkedin.com/in/vivekubuf/'
-      };
-      let p = defaults;
-      try {
-        const r = await fetch('data/profile.json');
-        if (r.ok) p = { ...defaults, ...(await r.json()) };
-      } catch {}
-      const hero = document.getElementById('hero');
-      hero.innerHTML = `
-        <img src="${p.professionalPhoto}" onerror="this.src='${p.heroFallbackPhoto}'" alt="${p.name} professional photo" />
-        <div>
-          <p class="muted">${p.tagline}</p>
-          <h1>${p.name}</h1>
-          <p class="lead">${p.summary}</p>
-          <div class="cta-row">
-            <a class="btn" href="about.html">About</a>
-            <a class="btn" href="projects.html">Projects</a>
-            <a class="btn" href="notes.html">Notes</a>
-            <a class="btn" href="${p.cvFile}">Download CV</a>
-            <a class="btn" href="${p.github}" target="_blank" rel="noreferrer">GitHub</a>
-            <a class="btn" href="${p.linkedin}" target="_blank" rel="noreferrer">LinkedIn</a>
-          </div>
-        </div>`;
-    }
-    init();
-  </script>
+  <footer class="footer" id="contact" aria-labelledby="contact-heading">
+    <div class="shell footer-inner">
+      <div>
+        <p class="eyebrow">Contact · Los Angeles, CA</p>
+        <h2 id="contact-heading">Let’s connect.</h2>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:imvivek1695@gmail.com">Email <span aria-hidden="true">↗</span></a>
+        <a href="https://www.linkedin.com/in/vivekubuf">LinkedIn <span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/vbhavsar16">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="footer-bottom"><span>Vivek Bhavsar</span><a href="#top">Back to top <span aria-hidden="true">↑</span></a></div>
+    </div>
+  </footer>
+  <script src="main.js" data-home></script>
 </body>
 </html>
